@@ -2,6 +2,8 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 const datePicker = document.getElementById('datetime-picker');
+const startButton = document.querySelector('[data-start]');
+startButton.disabled = true;
 
 flatpickr(datePicker, {
   enableTime: true,
@@ -15,11 +17,11 @@ flatpickr(datePicker, {
     if (selectedDate <= currentDate) {
       alert('Please choose a date in the future');
     } else {
-      const startButton = document.querySelector('[data-start]');
       startButton.disabled = false;
     }
   },
 });
+
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
@@ -38,6 +40,7 @@ timerDays.textContent = addLeadingZero(days);
 timerHours.textContent = addLeadingZero(hours);
 timerMinutes.textContent = addLeadingZero(minutes);
 timerSeconds.textContent = addLeadingZero(seconds);
+
 function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;
@@ -52,7 +55,6 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-const startButton = document.querySelector('[data-start]');
 let countdownInterval;
 
 startButton.addEventListener('click', () => {
@@ -76,27 +78,22 @@ startButton.addEventListener('click', () => {
     timerMinutes.textContent = addLeadingZero(timeLeft.minutes);
     timerSeconds.textContent = addLeadingZero(timeLeft.seconds);
 
-    timerDays.classList.add('red');
-    timerHours.classList.add('red');
-    timerMinutes.classList.add('red');
-    timerSeconds.classList.add('red');
-
-    if (timeLeft.days !== '00') {
+    if (timeLeft.days !== 0) {
       timerDays.classList.add('red');
     } else {
       timerDays.classList.remove('red');
     }
-    if (timeLeft.hours !== '00') {
+    if (timeLeft.hours !== 0) {
       timerHours.classList.add('red');
     } else {
       timerHours.classList.remove('red');
     }
-    if (timeLeft.minutes !== '00') {
+    if (timeLeft.minutes !== 0) {
       timerMinutes.classList.add('red');
     } else {
       timerMinutes.classList.remove('red');
     }
-    if (timeLeft.seconds !== '00') {
+    if (timeLeft.seconds !== 0) {
       timerSeconds.classList.add('red');
     } else {
       timerSeconds.classList.remove('red');
